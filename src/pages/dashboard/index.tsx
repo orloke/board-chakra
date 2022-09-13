@@ -1,11 +1,4 @@
-import {
-  Box,
-  Flex,
-  SimpleGrid,
-  Text,
-  theme,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid, Text, theme } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import Header from '../../components/Header';
@@ -67,28 +60,16 @@ const options = {
 const series = [{ name: 'series1', data: [31, 120, 10, 28, 61, 18, 109] }];
 
 export default function Dashboard() {
-  const isWideVersion = useBreakpointValue({
-    base: false,
-    md: true,
-  });
   return (
     <Flex direction="column" h="100vh">
-      <Header isWideVersion={isWideVersion} />
-      <Flex
-        w="100%"
-        my="6"
-        maxW="1480"
-        mx="auto"
-        px="6"
-        direction={isWideVersion ? 'row' : 'column'}
-      >
+      <Header />
+      <Flex w="100%" my="6" maxW="1480" mx="auto" px="6" direction="column">
         <Sidebar />
         <SimpleGrid
           flex="1"
           gap="4"
           minChildWidth="320px"
           justifyContent="flex-start"
-          mt={isWideVersion ? '0' : '8'}
         >
           <Box p="8" bg="gray.800" borderRadius="8" pb="4">
             <Text fontSize="lg" mb="4">
