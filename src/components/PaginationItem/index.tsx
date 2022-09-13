@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-interface PropsPaginationItem {
+interface PaginationItemProps {
   numberOfPages: number;
   isCurrent?: boolean;
 }
@@ -8,7 +8,7 @@ interface PropsPaginationItem {
 export function PaginationItem({
   numberOfPages,
   isCurrent = false,
-}: PropsPaginationItem) {
+}: PaginationItemProps) {
   if (isCurrent) {
     return (
       <Button

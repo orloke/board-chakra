@@ -1,11 +1,11 @@
 import { Box, Stack, Text } from '@chakra-ui/react';
 
-interface PropsNavSection {
+interface NavSectionProps {
   title: string;
   children: React.ReactNode;
 }
 
-export function NavSection({ children, title }: PropsNavSection) {
+export function NavSection({ children, title }: NavSectionProps) {
   return (
     <Box>
       <Text fontWeight="bold" color="gray.400" fontSize="small">
