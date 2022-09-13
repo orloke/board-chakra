@@ -4,7 +4,11 @@ import { NotificationsNav } from '../NotificationsNav';
 import { Profile } from '../Profile';
 import { SearchBox } from '../SearchBox';
 
-export default function Header() {
+interface HeaderProps {
+  isWideVersion?: boolean;
+}
+
+export default function Header({ isWideVersion }: HeaderProps) {
   return (
     <Flex
       as="header"
@@ -17,10 +21,10 @@ export default function Header() {
       align="center"
     >
       <Logo />
-      <SearchBox />
+      {isWideVersion && <SearchBox />}
       <Flex align="center" ml="auto">
         <NotificationsNav />
-        <Profile />
+        <Profile showProfileData={isWideVersion} />
       </Flex>
     </Flex>
   );
