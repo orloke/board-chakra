@@ -7,7 +7,7 @@ import { SearchBox } from '../SearchBox';
 export default function Header() {
   const isWideVersion = useBreakpointValue({
     base: false,
-    md: true,
+    lg: true,
   });
   return (
     <Flex
