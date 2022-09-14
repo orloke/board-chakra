@@ -23,7 +23,7 @@ export default function UsersList() {
   return (
     <Box>
       <Header />
-      <Flex w="100%" my="6" maxW="1480" mx="auto" px="6">
+      <Flex w="100%" my="6" maxW="1480" mx="auto" px="6" overflowX="auto">
         <Sidebar />
         <Box flex="1" borderRadius="8" bg="gray.800" p="8">
           <Flex mb="8" justify="space-between" align="center">
@@ -45,7 +45,7 @@ export default function UsersList() {
           <Table px="6" color="gray.300" colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th>
+                <Th pl="0" pr="6">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>Usuarios</Th>
@@ -55,7 +55,7 @@ export default function UsersList() {
             </Thead>
             <Tbody>
               <Tr>
-                <Td px="6">
+                <Td pl="0" pr="6">
                   <Checkbox colorScheme="pink" />
                 </Td>
                 <Td>
@@ -67,7 +67,7 @@ export default function UsersList() {
                   </Box>
                 </Td>
                 <Td>11 de setembro, 2022</Td>
-                <Td>
+                <Td pr="0">
                   <Button
                     as="a"
                     size="sm"
