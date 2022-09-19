@@ -10,7 +10,7 @@ interface FormInputProps extends InputProps {
   name: string;
   placeholder?: string;
   reft: UseFormRegisterReturn<string>;
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
 }
 
 export function FormInput({
