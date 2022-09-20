@@ -8,7 +8,9 @@ import {
   SimpleGrid,
   VStack,
 } from '@chakra-ui/react';
+import { useMutation } from 'react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
@@ -17,6 +19,8 @@ import { FormInput } from '../../../components/FormInput';
 import Header from '../../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import { CreateUserForm } from '../../../@types';
+import { api } from '../../../services/api';
+import { queryClient } from '../../../services/queryClient';
 
 const schema = yup
   .object({
@@ -37,11 +41,31 @@ const schema = yup
   .required();
 
 export default function CreateUser() {
+  const router = useRouter();
   const { register, handleSubmit, formState } = useForm<CreateUserForm>({
     resolver: yupResolver(schema),
   });
-  const handleSignIn: SubmitHandler<CreateUserForm> = values => {
-    console.log(values);
+
+  const createUser = useMutation(
+    async (user: CreateUserForm) => {
+      const response = await api.post('users', {
+        user: {
+          ...user,
+          createdAt: new Date(),
+        },
+      });
+      return response;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('users');
+      },
+    },
+  );
+
+  const handleCreatedUser: SubmitHandler<CreateUserForm> = values => {
+    createUser.mutateAsync(values);
+    router.push('/users');
   };
 
   return (
@@ -55,7 +79,7 @@ export default function CreateUser() {
           borderRadius="8"
           bg="gray.800"
           p="8"
-          onSubmit={handleSubmit(handleSignIn)}
+          onSubmit={handleSubmit(handleCreatedUser)}
         >
           <Heading size="lg" fontWeight="normal">
             Criar usuário

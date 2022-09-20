@@ -1,9 +1,12 @@
-import { createServer, Factory, Model } from 'miragejs';
+import { ActiveModelSerializer, createServer, Factory, Model } from 'miragejs';
 import { faker } from '@faker-js/faker';
 import { User } from '../../@types';
 
 export function makeServer({ environment = 'test' } = {}) {
   const server = createServer({
+    serializers: {
+      application: ActiveModelSerializer,
+    },
     environment,
     models: {
       user: Model.extend<Partial<User>>({}),
@@ -37,6 +40,8 @@ export function makeServer({ environment = 'test' } = {}) {
         const filtered = schema.all('user').slice(start, end);
         return { users: filtered.models, total: schema.all('user').length };
       });
+
+      this.get('users/:id');
 
       this.post('/users');
 

@@ -4,6 +4,7 @@ import {
   Checkbox,
   Flex,
   Icon,
+  Link,
   Spinner,
   Table,
   Tbody,
@@ -13,10 +14,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { RiPencilLine } from 'react-icons/ri';
 import { DateUser } from '../../@types';
 import { convertedData } from '../../helpers';
+import { api } from '../../services/api';
+import { queryClient } from '../../services/queryClient';
 import { Pagination } from '../Pagination';
 
 interface PropsRenderUsersList {
@@ -36,6 +39,13 @@ export default function RenderUsersList({
   page,
   onPageChange,
 }: PropsRenderUsersList) {
+  const handlePerfetchUser = async (userId: string) => {
+    await queryClient.prefetchQuery(['user', userId], async () => {
+      const response = await api.get(`users/${userId}`);
+      return response.data;
+    });
+  };
+
   if (isLoading) {
     return (
       <Flex justify="center">
@@ -73,7 +83,13 @@ export default function RenderUsersList({
               </Td>
               <Td>
                 <Box>
-                  <Text fontWeight="bold">{item.name}</Text>
+                  <Link
+                    href="##"
+                    color="purple.400"
+                    onMouseEnter={() => handlePerfetchUser(item.id)}
+                  >
+                    <Text fontWeight="bold">{item.name}</Text>
+                  </Link>
                   <Text fontSize="sm" color="gray.300">
                     {item.email}
                   </Text>
