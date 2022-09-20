@@ -7,3 +7,9 @@ export interface CreateUserForm extends SigInType {
   name: string;
   confirmPassword: string;
 }
+
+export interface User {
+  name: string;
+  email: string;
+  createdAt: string;
+}
