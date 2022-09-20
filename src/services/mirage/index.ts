@@ -23,13 +23,23 @@ export function makeServer({ environment = 'test' } = {}) {
     },
 
     seeds(users) {
-      users.createList('user', 10);
+      users.createList('user', 200);
     },
     routes() {
       this.namespace = 'api';
       this.timing = 750;
-      this.get('/users');
+      this.get('/users', (schema, request) => {
+        const qp = request.queryParams;
+        const page = Number(qp?.page) || 1;
+        const limit = Number(qp?.limit) || 10;
+        const start = (page - 1) * limit;
+        const end = start + limit;
+        const filtered = schema.all('user').slice(start, end);
+        return { users: filtered.models, total: schema.all('user').length };
+      });
+
       this.post('/users');
+
       this.namespace = '';
       this.passthrough();
     },

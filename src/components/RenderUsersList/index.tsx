@@ -19,15 +19,17 @@ import { convertedData } from '../../helpers';
 import { Pagination } from '../Pagination';
 
 interface PropsRenderUsersList {
-  data: DateUser;
+  data: DateUser | undefined;
   error: unknown;
   isLoading: boolean;
+  total: number | undefined;
 }
 
 export default function RenderUsersList({
   data,
   error,
   isLoading,
+  total,
 }: PropsRenderUsersList) {
   if (isLoading) {
     return (
@@ -59,7 +61,7 @@ export default function RenderUsersList({
           </Tr>
         </Thead>
         <Tbody>
-          {data.users.map(item => (
+          {data?.users.map(item => (
             <Tr key={item.id}>
               <Td pl="0" pr="6">
                 <Checkbox colorScheme="pink" />
@@ -89,7 +91,13 @@ export default function RenderUsersList({
           ))}
         </Tbody>
       </Table>
-      <Pagination />
+      <Pagination
+        total={total}
+        currentPage={1}
+        onPageChange={() => {
+          return true;
+        }}
+      />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Icon } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Icon, Spinner } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiAddLine } from 'react-icons/ri';
 import Header from '../../components/Header';
@@ -7,8 +7,7 @@ import RenderUsersList from '../../components/RenderUsersList';
 import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UsersList() {
-  const { data, isLoading, error } = useUsers();
-
+  const { data, isLoading, isFetching, error } = useUsers();
   return (
     <Box>
       <Header />
@@ -18,6 +17,9 @@ export default function UsersList() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuarios
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Heading>
             <Link href="/users/create" passHref>
               <Button
@@ -31,7 +33,12 @@ export default function UsersList() {
               </Button>
             </Link>
           </Flex>
-          <RenderUsersList error={error} isLoading={isLoading} data={data} />
+          <RenderUsersList
+            error={error}
+            isLoading={isLoading}
+            data={data}
+            total={data?.total}
+          />
         </Box>
       </Flex>
     </Box>
