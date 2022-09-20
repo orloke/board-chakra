@@ -17,4 +17,5 @@ export interface User {
 
 export interface DateUser {
   users: User[];
+  total: number;
 }
