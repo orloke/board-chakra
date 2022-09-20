@@ -1,17 +1,13 @@
 import { Box, Button, Flex, Heading, Icon } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useQuery } from 'react-query';
 import { RiAddLine } from 'react-icons/ri';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import RenderUsersList from '../../components/RenderUsersList';
+import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UsersList() {
-  const { data, isLoading, error } = useQuery('userList', async () => {
-    const response = await fetch('http://localhost:3000/api/users');
-    const users = await response.json();
-    return users;
-  });
+  const { data, isLoading, error } = useUsers();
 
   return (
     <Box>

@@ -16,14 +16,14 @@ export function makeServer({ environment = 'test' } = {}) {
         email() {
           return faker.internet.email().toLowerCase();
         },
-        createAt() {
+        createdAt() {
           return faker.date.recent(10);
         },
       }),
     },
 
     seeds(users) {
-      users.createList('user', 200);
+      users.createList('user', 10);
     },
     routes() {
       this.namespace = 'api';

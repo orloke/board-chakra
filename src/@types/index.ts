@@ -12,4 +12,9 @@ export interface User {
   name: string;
   email: string;
   createdAt: string;
+  id: string;
+}
+
+export interface DateUser {
+  users: User[];
 }
