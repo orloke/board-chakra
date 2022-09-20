@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Heading, Icon, Spinner } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -7,7 +8,8 @@ import RenderUsersList from '../../components/RenderUsersList';
 import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UsersList() {
-  const { data, isLoading, isFetching, error } = useUsers();
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching, error } = useUsers(page);
   return (
     <Box>
       <Header />
@@ -38,6 +40,8 @@ export default function UsersList() {
             isLoading={isLoading}
             data={data}
             total={data?.total}
+            page={page}
+            onPageChange={setPage}
           />
         </Box>
       </Flex>

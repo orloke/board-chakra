@@ -1,13 +1,16 @@
 import { Button } from '@chakra-ui/react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface PaginationItemProps {
   numberOfPages: number;
   isCurrent?: boolean;
+  onPageChange: Dispatch<SetStateAction<number>>;
 }
 
 export function PaginationItem({
   numberOfPages,
   isCurrent = false,
+  onPageChange,
 }: PaginationItemProps) {
   if (isCurrent) {
     return (
@@ -36,6 +39,7 @@ export function PaginationItem({
         bg: 'gray.500',
         cursor: 'default',
       }}
+      onClick={() => onPageChange(numberOfPages)}
     >
       {numberOfPages}
     </Button>

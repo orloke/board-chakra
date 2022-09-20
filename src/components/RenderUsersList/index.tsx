@@ -13,6 +13,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { RiPencilLine } from 'react-icons/ri';
 import { DateUser } from '../../@types';
 import { convertedData } from '../../helpers';
@@ -23,6 +24,8 @@ interface PropsRenderUsersList {
   error: unknown;
   isLoading: boolean;
   total: number | undefined;
+  page: number;
+  onPageChange: Dispatch<SetStateAction<number>>;
 }
 
 export default function RenderUsersList({
@@ -30,6 +33,8 @@ export default function RenderUsersList({
   error,
   isLoading,
   total,
+  page,
+  onPageChange,
 }: PropsRenderUsersList) {
   if (isLoading) {
     return (
@@ -93,10 +98,8 @@ export default function RenderUsersList({
       </Table>
       <Pagination
         total={total}
-        currentPage={1}
-        onPageChange={() => {
-          return true;
-        }}
+        currentPage={page}
+        onPageChange={onPageChange}
       />
     </>
   );

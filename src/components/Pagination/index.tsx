@@ -1,11 +1,11 @@
 import { Box, HStack, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { PaginationItem } from '../PaginationItem';
 
 interface PropsPagination {
   currentPage: number;
   total: number | undefined;
-  onPageChange: () => void;
+  onPageChange: Dispatch<SetStateAction<number>>;
 }
 
 const generatePagesArray = (from: number, to: number) => {
@@ -33,7 +33,6 @@ export function Pagination({
           Math.min(currentPage + siblingsCount, lastPage),
         )
       : [];
-  console.log(nextPage);
 
   return (
     <HStack mt="8" justify="space-between" align="center" spacing="6">
@@ -43,7 +42,7 @@ export function Pagination({
       <HStack spacing="2">
         {currentPage > 1 + siblingsCount && (
           <>
-            <PaginationItem numberOfPages={1} />
+            <PaginationItem onPageChange={onPageChange} numberOfPages={1} />
             {currentPage > 2 + siblingsCount && (
               <Text w="8" align="center" h="8" bg="gray.900">
                 ...
@@ -53,12 +52,24 @@ export function Pagination({
         )}
         {previousPage.length > 0 &&
           previousPage.map(item => (
-            <PaginationItem key={item} numberOfPages={item} />
+            <PaginationItem
+              onPageChange={onPageChange}
+              key={item}
+              numberOfPages={item}
+            />
           ))}
-        <PaginationItem isCurrent numberOfPages={currentPage} />
+        <PaginationItem
+          onPageChange={onPageChange}
+          isCurrent
+          numberOfPages={currentPage}
+        />
         {nextPage.length > 0 &&
           nextPage.map(item => (
-            <PaginationItem key={item} numberOfPages={item} />
+            <PaginationItem
+              onPageChange={onPageChange}
+              key={item}
+              numberOfPages={item}
+            />
           ))}
         {currentPage + 1 < lastPage && (
           <>
@@ -67,7 +78,10 @@ export function Pagination({
                 ...
               </Text>
             )}
-            <PaginationItem numberOfPages={lastPage} />
+            <PaginationItem
+              onPageChange={onPageChange}
+              numberOfPages={lastPage}
+            />
           </>
         )}
       </HStack>
